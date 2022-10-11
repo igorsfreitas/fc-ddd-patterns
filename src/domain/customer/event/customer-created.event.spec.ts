@@ -33,26 +33,4 @@ describe("Customer events tests", () => {
     expect(spyEventHandlerFirst).toHaveBeenCalled();
     expect(spyEventHandlerSecond).toHaveBeenCalled();
   });
-
-  it("Customer Changed: Should notify all event handlers", () => {
-    const eventDispatcher = new EventDispatcher();
-    const eventHandler = new SendAlertWhenCustomerAddressUpdatedHandler();
-    const spyEventHandler = jest.spyOn(eventHandler, "handle");
-
-    eventDispatcher.register("CustomerAddressUpdatedEvent", eventHandler);
-
-    expect(
-      eventDispatcher.getEventHandlers["CustomerAddressUpdatedEvent"][0]
-    ).toMatchObject(eventHandler);
-
-    const customerAddressUpdatedEvent = new CustomerAddressUpdatedEvent({
-      id: "123",
-      endereco: "rua x",
-      nome: "customer",
-    });
-
-    eventDispatcher.notify(customerAddressUpdatedEvent);
-
-    expect(spyEventHandler).toHaveBeenCalled();
-  });
 });
